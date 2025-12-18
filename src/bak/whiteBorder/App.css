@@ -1,0 +1,105 @@
+html, body, #root {
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 10px 10px;
+  background-color: #0d253f;
+  color:white;
+}
+
+#app-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 2px;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.header-container {
+  text-align: center;
+  margin: 0 auto;
+  padding: 4px 0;
+}
+
+.searchForm {
+  max-width: 600px;     /* Narrower = better on mobile */
+  margin: 10px auto;    /* Vertical + horizontal centering */
+  padding: 5;
+  text-align: center;
+}
+
+.searchForm input {
+  padding: 5px;
+  font-size: 1rem;
+  width: 90%;
+  max-width: 400px;
+}
+
+.searchForm button {
+  padding: 10px;
+  font-size: 1rem;
+  margin-left: 10px;
+  color: black;
+}
+
+h1 {
+  margin: 0;
+  padding: 2px 0 0 2px;
+  font-size: 25px;
+}
+
+h2 {
+  margin: 0;
+  padding: 5px 0 5px 5px;
+  font-size: 16px;
+}
+
+form {
+  padding: 4px 4px;
+}
+
+#checkboxArea {
+  display: inline-block;
+  width: 130px;
+}
+
+.movie-card {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 8px;
+  padding: 15px;
+  margin-bottom: 20px;
+  overflow: hidden;
+}
+
+.movie-card h2 {
+  margin: 0 0 0.75rem 0;
+  color: #90cea1;
+  font-size: 1.4rem;
+}
+
+.movie-content {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+  align-items: flex-start;
+  padding: 5px;
+}
+
+.movieIcon {
+  width: 130px;
+  height: auto;
+  border-radius: 6px;
+  flex-shrink: 0;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.3);
+}
+
+.movie-overview {
+  flex: 1;
+  min-width: 280px;
+  margin: 0;
+  line-height: 1.5;
+}
+
+#genreForm {
+  text-align: center;
+  margin: 0 auto;
+}

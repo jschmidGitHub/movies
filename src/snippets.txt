@@ -1,0 +1,142 @@
+.searchForm {
+  max-width: 600px; 
+  margin: 10px auto;
+  padding: 5;
+  text-align: center;
+  margin-left: 10px;
+  display: flex;            /* ← row by default */
+  flex-wrap: nowrap;        /* never wrap */
+  align-items: baseline;    /* keep text & button on the same line */
+  gap: 0.5rem;              /* space between input & button */
+  margin-bottom: 1rem;      /* separate from cards */
+}
+
+<p>{result.vote_average}</p>
+
+import { useGenres } from './hooks/useGenres.js';
+  const { genres } = useGenres();
+    const selectedGenre = document.getElementById('genres').value;
+
+        <form id="genreForm">
+        <label htmlFor="genres">Movie genres: </label>
+        <select name="genres" id="genres">
+          <option value="">All Genres</option>
+          {genres.map(genre => (
+            <option key={genre.id} value={genre.id}>
+              {genre.name}
+            </option>
+          ))}
+        </select>
+      </form>
+
++ "&with_genres=" + selectedGenre
+
+<form id="choiceForm" onChange={handleChoice}>
+
+  <input type="radio" id="movies" name="movies" value="movies" checked />
+  <label htmlFor="movies">Movies</label><br />
+
+  <input type="radio" id="tv" name="tv" value="tv" />
+  <label htmlFor="tv">TV</label><br />
+
+  <input type="radio" id="people" name="people" value="people" />
+  <label htmlFor="people">People</label>
+</form>
+
+/**
+ * Returns the TMDB genre ID for a given genre name (case-insensitive).
+ * @param {string} genreName - The name of the genre (e.g., "Comedy", "action")
+ * @returns {number|null} - The genre ID, or null if not found
+ */
+function getGenreId(genreName) {
+  // TMDB genre list (official, static)
+  const genreMap = {
+    "action": 28,
+    "adventure": 12,
+    "animation": 16,
+    "comedy": 35,
+    "crime": 80,
+    "documentary": 99,
+    "drama": 18,
+    "family": 10751,
+    "fantasy": 14,
+    "history": 36,
+    "horror": 27,
+    "music": 10402,
+    "mystery": 9648,
+    "romance": 10749,
+    "science fiction": 878,
+    "sci-fi": 878,
+    "tv movie": 10770,
+    "thriller": 53,
+    "war": 37,
+    "western": 37
+  };
+
+  // Normalize input: lowercase and trim
+  const normalized = genreName.toLowerCase().trim();
+
+  // Return ID or null
+  return genreMap[normalized] || null;
+}
+
+// GenreCheckboxes element
+import { useGenres } from './hooks/useGenres.js';
+
+function GenreCheckboxes() {
+
+  const { genres, loading, error } = useGenres();
+
+  if (loading) return <p>Loading genres…</p>;
+  if (error) return <p>Failed to load genres.</p>;
+
+  const checkboxTags = genres.map(genre => (
+    <div key={genre.id}>
+      <input type="checkbox" id={genre.name} name="genres[]" value={genre.name} />
+      <label htmlFor={genre.name}>{genre.name}</label>
+    </div>
+  ));
+
+  return (
+    <fieldset id="checkboxArea">
+      <legend>Genres:</legend>
+      {checkboxTags}
+    </fieldset>
+  );
+}
+
+export default GenreCheckboxes;
+
+// Hook: useGenres
+------------------------------------------------
+import { useState, useEffect } from 'react';
+
+export function useGenres() {
+  const [genres, setGenres] = useState([]);
+  const [loading, setLoading] = useState(true);
+  const [error, setError] = useState(null);
+
+  const tmdbKey = '5fc5860c452eddb5a80d3dd40677c10c';
+  const tmdbBaseUrl = 'https://api.themoviedb.org/3';
+
+  useEffect(() => {
+    const fetchGenres = async () => {
+      try {
+        const url = `${tmdbBaseUrl}/genre/movie/list?api_key=${tmdbKey}`;
+        const res = await fetch(url);
+        if (!res.ok) {
+          throw new Error(`HTTP ${res.status}`);
+        }
+        const data = await res.json();
+        setGenres(data.genres || []);
+      } catch (err) {
+        setError(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+    fetchGenres();
+  }, []);
+
+  return { genres, loading, error };
+}
